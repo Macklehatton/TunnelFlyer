@@ -51,3 +51,22 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+##############
+## Unity
+##############
+
+# Ignore all assets
+Assets/*
+
+#Except these
+!Assets/Scripts
+!Assets/Levels
+
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Obj/
+UnityGenerated/
+Library/

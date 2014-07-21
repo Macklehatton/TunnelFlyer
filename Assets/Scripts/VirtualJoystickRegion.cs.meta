@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1368c1ec815343f49abefdaa1f817a92
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - joystick2D: {fileID: 2800000, guid: 65a307bdc44ed4968b6325588449d934, type: 3}
+  - background2D: {fileID: 2800000, guid: 18fce3ff1ad74454d95ebaafe997d4ed, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
