@@ -127,7 +127,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		followAngles = Vector3.SmoothDamp( followAngles, targetAngles, ref followVelocity, dampingTime );
 		
 
-<<<<<<< HEAD
+
 		xAdjustment = Mathf.Pow ((1 - xDiff), 3 ) * valleyDepth * rotationSpeed;
 		yAdjustment = Mathf.Pow ((1 - yDiff), 3 ) * valleyDepth * rotationSpeed;		
 	}
@@ -144,10 +144,9 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 			leveling = true;
 		}
 	}
-=======
+
 		if (leveling) {			
 			transform.localRotation = Quaternion.RotateTowards (transform.localRotation, Quaternion.identity, Time.deltaTime * levelingSpeed);
->>>>>>> parent of 4ab13f2... Rotation valleys and horizontal snapping
 
 		}
 
