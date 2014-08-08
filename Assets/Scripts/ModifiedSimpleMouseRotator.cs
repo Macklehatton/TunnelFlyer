@@ -43,6 +43,9 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+
+
 		angle = Vector3.Angle (transform.forward, lastHeading);
 
 		if (angle <= 0.0f) {
@@ -116,6 +119,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 
 		} else {
 
+
 			inputH = Input.mousePosition.x;
 			inputV = Input.mousePosition.y;
 
@@ -125,25 +129,6 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		}
 
 		followAngles = Vector3.SmoothDamp( followAngles, targetAngles, ref followVelocity, dampingTime );
-		
-
-
-		xAdjustment = Mathf.Pow ((1 - xDiff), 3 ) * valleyDepth * rotationSpeed;
-		yAdjustment = Mathf.Pow ((1 - yDiff), 3 ) * valleyDepth * rotationSpeed;		
-	}
-	
-	
-	void LevelingOn() {
-		if (!leveling) {
-			if (startAngles == Vector3.zero) {
-				startAngles = targetAngles;
-				startRotation = transform.localRotation.eulerAngles;
-				startTime = Time.time;
-				Debug.Log ("Set start angles");
-			}
-			leveling = true;
-		}
-	}
 
 		if (leveling) {			
 			transform.localRotation = Quaternion.RotateTowards (transform.localRotation, Quaternion.identity, Time.deltaTime * levelingSpeed);
