@@ -129,9 +129,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 
 <<<<<<< HEAD
 		xAdjustment = Mathf.Pow ((1 - xDiff), 3 ) * valleyDepth * rotationSpeed;
-		yAdjustment = Mathf.Pow ((1 - yDiff), 3 ) * valleyDepth * rotationSpeed;
-		
-		//iTween.RotateTo(gameObject, iTween.Hash("z", 0f, "time", 0.0f));	
+		yAdjustment = Mathf.Pow ((1 - yDiff), 3 ) * valleyDepth * rotationSpeed;		
 	}
 	
 	
