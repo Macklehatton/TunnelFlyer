@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void FixedUpdate ()	{					
-		
+		// Separate strafe force and forward force, the ship currently slows down when strafing
 		desiredMove = transform.position + transform.up * input.y * dodgeSpeed + transform.right * input.x * dodgeSpeed + transform.forward * speed;
 		                                   
 		distance = desiredMove - transform.position;

@@ -1,22 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class SmoothFollow : MonoBehaviour {
 
 	public Transform player;
 	public float inLimit;
 	public float outLimit;
-	public float damping;
-	public float speed;
+	public float speed;	
 	
+	Vector3 desiredPosition;
+	
+	
+	
+	public Vector3 distance;
+	public Vector3 targetVelocity;
+	public Vector3 error;
+	public Vector3 force;
+	
+	public float distanceFactor = 2.5f;
+	public float maxVelocity = 15.0f;
+	public float maxForce = 40.0f;
+	public float gain = 5f;
+	
+	void Update () {
+	}
 		
-	void FixedUpdate () {
-				
-		if (Vector3.Distance(transform.position, player.position) > inLimit) {
-			if (Vector3.Distance(transform.position, player.position) > outLimit){
-				transform.position = Lerp(transform.position, player.position, speed);
-			}
-		}		
+	void LateUpdate () {
+		desiredPosition = player.position;									
+		
+		distance = desiredPosition - transform.position;
+		targetVelocity = Vector3.ClampMagnitude(distanceFactor * distance, maxVelocity);
+		error = targetVelocity - rigidbody.velocity;
+		force = Vector3.ClampMagnitude(gain * error, maxForce);
+		rigidbody.AddForce(force);   
+																														
+																													
+//		if (Vector3.Distance(transform.position, desiredPosition) > inLimit) {
+//			if (Vector3.Distance(transform.position, desiredPosition) > outLimit){
+//				transform.position = Lerp(transform.position, desiredPosition, speed);
+//			}
+//		}					
 	}
 	
 	public static Vector3 Lerp(Vector3 start, Vector3 finish, float percentage)
