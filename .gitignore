@@ -63,6 +63,7 @@ Assets/*
 #Except these
 !Assets/Scripts
 !Assets/Levels
+!Assets/Scenes
 
 # =============== #
 # Unity generated #
