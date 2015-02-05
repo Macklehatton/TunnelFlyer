@@ -60,9 +60,9 @@ $RECYCLE.BIN/
 # Ignore all assets
 Assets/*
 
-#Except these
+# Except these
+
 !Assets/Scripts
-!Assets/Levels
 !Assets/Scenes
 
 # =============== #
