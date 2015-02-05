@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 	public Vector3 desiredMove;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	public float speed;
 	public float dodgeSpeed;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
 =======
 =======
 >>>>>>> parent of 54281cb... Basic movement working again
+=======
+>>>>>>> parent of 54281cb... Basic movement working again
 
 	public Camera playerCam;
 
@@ -65,6 +68,9 @@ public class PlayerController : MonoBehaviour
 		                                   desiredMove, 
 		                                   Mathf.SmoothStep(0.0f, 1.0f, dodgeSpeed));
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 54281cb... Basic movement working again
+=======
 >>>>>>> parent of 54281cb... Basic movement working again
 =======
 >>>>>>> parent of 54281cb... Basic movement working again
