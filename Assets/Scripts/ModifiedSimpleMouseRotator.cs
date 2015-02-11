@@ -39,13 +39,13 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 	public float valleyDepth;
 	
 	void Start () {
-		originalRotation = transform.localRotation;
+		originalRotation = transform.rotation;
 	}
 	
 	void LateUpdate () {		
 		
 		headingChange = Vector3.Angle (transform.forward, lastHeading);
-		fromNeutral = Quaternion.Angle (transform.localRotation, Quaternion.Euler (new Vector3 (0f, 0f, transform.localRotation.eulerAngles.z)));
+		fromNeutral = Quaternion.Angle (transform.rotation, Quaternion.Euler (new Vector3 (0f, 0f, transform.rotation.eulerAngles.z)));
 		
 		lastHeading = transform.forward;
 		
@@ -66,7 +66,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		}
 		
 		if (!leveling) {
-			transform.localRotation = originalRotation;	
+			transform.rotation = originalRotation;	
 		}
 		
 		float inputH = 0;
@@ -92,20 +92,20 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		}	
 		
 		if (leveling) {
-			zeroX = transform.localRotation;
+			zeroX = transform.rotation;
 			zeroX.eulerAngles = new Vector3 (0f, zeroX.eulerAngles.y, zeroX.eulerAngles.z);			
-			float ySettle = Mathf.Round ( transform.localRotation.eulerAngles.y / settleSnap) * settleSnap;
+			float ySettle = Mathf.Round ( transform.rotation.eulerAngles.y / settleSnap) * settleSnap;
 			
 			iTween.RotateTo(gameObject, iTween.Hash("easetype", "easeInQuad", "time",levelingTime, "x",0f,"y", ySettle, "name", "RotateTo"));			
 			
 		} else {
 			followAngles = Vector3.SmoothDamp( followAngles, targetAngles, ref followVelocity, dampingTime );			
 			
-			transform.localRotation = originalRotation * Quaternion.Euler( -followAngles.x, followAngles.y, 0 );
+			transform.rotation = originalRotation * Quaternion.Euler( -followAngles.x, followAngles.y, 0 );
 		}
 		
-		xDiff = Mathf.Abs((Mathf.Round ( transform.localRotation.eulerAngles.x / valleySnap) * valleySnap) - transform.localRotation.eulerAngles.x)/valleySnap;
-		yDiff = Mathf.Abs((Mathf.Round ( transform.localRotation.eulerAngles.y / valleySnap) * valleySnap) - transform.localRotation.eulerAngles.y)/valleySnap;		
+		xDiff = Mathf.Abs((Mathf.Round ( transform.rotation.eulerAngles.x / valleySnap) * valleySnap) - transform.rotation.eulerAngles.x)/valleySnap;
+		yDiff = Mathf.Abs((Mathf.Round ( transform.rotation.eulerAngles.y / valleySnap) * valleySnap) - transform.rotation.eulerAngles.y)/valleySnap;		
 		
 		xAdjustment = Mathf.Pow ((1 - xDiff), 3 ) * valleyDepth * rotationSpeed;
 		yAdjustment = Mathf.Pow ((1 - yDiff), 3 ) * valleyDepth * rotationSpeed;		
@@ -116,7 +116,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		if (!leveling) {
 			if (startAngles == Vector3.zero) {
 				startAngles = targetAngles;
-				startRotation = transform.localRotation.eulerAngles;
+				startRotation = transform.rotation.eulerAngles;
 				startTime = Time.time;
 				Debug.Log ("Set start angles");
 			}
@@ -128,7 +128,7 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		if (leveling) {	
 			Debug.Log ("Leveling off");
 			startAngles = Vector3.zero;
-			targetAngles = transform.localRotation.eulerAngles;
+			targetAngles = transform.rotation.eulerAngles;
 			timeSinceInput = 0.0f;
 			leveling = false;
 		}
