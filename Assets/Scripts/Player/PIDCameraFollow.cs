@@ -5,8 +5,12 @@ public class PIDCameraFollow : MonoBehaviour {
 
 	public GameObject target;
 	public Vector3 followOffset;
+	public float followSpeed;
 	public float distanceFactor;
-	public float baseNumber;
+	public float deadZone;
+	public float exponent;
+	public float minimumBase;
+	public float maxBase;
 
 	Vector3 targetPosition;
 
@@ -20,7 +24,6 @@ public class PIDCameraFollow : MonoBehaviour {
 	Vector3 force;
 
 	void FixedUpdate () {
-
 		targetPosition = target.transform.position;
 		targetPosition -= followOffset;
 
@@ -35,6 +38,6 @@ public class PIDCameraFollow : MonoBehaviour {
 		// clamp the force to the max value available
 		force = Vector3.ClampMagnitude(force, maxForce);
 		// apply the force to accelerate the rigidbody:
-		rigidbody.AddForce(force * Mathf.Pow(baseNumber, distance * distanceFactor));		
+		GetComponent<Rigidbody>().AddForce(force);
 	}
 }

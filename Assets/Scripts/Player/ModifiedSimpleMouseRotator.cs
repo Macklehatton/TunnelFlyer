@@ -40,6 +40,10 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 	
 	void Start () {
 		originalRotation = transform.rotation;
+		targetAngles = Vector3.zero;
+		followAngles = Vector3.zero;
+		originalRotation = transform.rotation;
+
 	}
 	
 	void LateUpdate () {		

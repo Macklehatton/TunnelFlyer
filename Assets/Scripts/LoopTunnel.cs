@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ManualCollision : MonoBehaviour {
+public class LoopTunnel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
