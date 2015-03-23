@@ -3,16 +3,22 @@ using System.Collections;
 
 public class CopyRotation : MonoBehaviour {
 
-	public GameObject target;
+	public Transform target;
 	public float speed;
-	public Vector3 targetRotation;
 
-	void Update () {
-		transform.rotation = Quaternion.Lerp(transform.rotation, 
-		                                     target.transform.rotation,  
+    Rigidbody rigidbody;
+    Rigidbody targetBody;
 
-		                                     Mathf.SmoothStep(0.0f, 1.0f, speed));                                
+    void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+        targetBody = target.GetComponent<Rigidbody>();
+    }
 
-	
-	}
+    void FixedUpdate()
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation,
+                                             target.rotation,
+                                             Mathf.SmoothStep(0.0f, 1.0f, speed));        
+    }
 }

@@ -4,20 +4,28 @@ using System.Collections;
 public class PhysicsController : MonoBehaviour {
 
 	public float leftH;
-	public float leftV;
-	
+	public float leftV;	
 	public Vector2 input;
+
 	public float maxStrafeSpeed;
 	public float strafeThrust;
-
 	public float maxForwardSpeed;
 	public float forwardThrust;
 
 	public float currentSpeed;
-	Vector3 lastPosition;
+	Vector3 lastPosition;    
+
+    private Rigidbody rigidbody;
+
+    Vector3 relVelocity;
+    public float dragScaleValue;    
+
+    void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
 
 	void FixedUpdate () {
-		//measure speed
 		currentSpeed = (transform.position - lastPosition).magnitude;
 		lastPosition = transform.position;		
 		
@@ -28,16 +36,22 @@ public class PhysicsController : MonoBehaviour {
 
 		Vector3 strafeDir = new Vector3 (input.x, input.y, 0f);
 
-		if (Mathf.Abs(GetComponent<Rigidbody>().velocity.x) > maxStrafeSpeed || Mathf.Abs(GetComponent<Rigidbody>().velocity.y) > maxStrafeSpeed) {
+        if (Mathf.Abs(rigidbody.velocity.x) > maxStrafeSpeed || Mathf.Abs(rigidbody.velocity.y) > maxStrafeSpeed)
+        {
 			return;
 		} else {
-		GetComponent<Rigidbody>().AddRelativeForce(strafeDir * strafeThrust);			
+            rigidbody.AddRelativeForce(strafeDir * strafeThrust);			
 		}
 
-		if (GetComponent<Rigidbody>().velocity.z > maxForwardSpeed) {
-			return;
+        if (rigidbody.velocity.z > maxForwardSpeed)
+        {
+            rigidbody.AddRelativeForce(forwardThrust * Vector3.forward);
 		}else {
-			GetComponent<Rigidbody>().AddRelativeForce(forwardThrust * Vector3.forward);
+            rigidbody.AddRelativeForce(forwardThrust * Vector3.forward);
 		}
+
+        //side drag
+        relVelocity = transform.InverseTransformDirection(rigidbody.velocity);
+        rigidbody.AddRelativeForce(-relVelocity.x * dragScaleValue * Vector3.right);
 	}
 }

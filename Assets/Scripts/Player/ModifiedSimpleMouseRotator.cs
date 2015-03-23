@@ -7,8 +7,8 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 	// Automatically levels out and snaps to a different set of angles when there is no input.
 	
 	public Vector2 rotationRange = new Vector3(70,70); 
-	public float rotationSpeed = 10;
-	public float dampingTime = 0.2f;
+	public float rotationSpeed = 1.5f;
+	public float dampingTime = 0.0f;
 	public bool autoZeroVerticalOnMobile = true;
 	public bool autoZeroHorizontalOnMobile = false;
 	public Vector3 targetAngles;
@@ -20,10 +20,6 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 	public float levelingTime;
 	public float levelingTimer;
 	public float timeSinceInput;
-	public Quaternion lastRotation;
-	public Vector3 lastHeading;
-	public float headingChange;
-	public float fromNeutral;
 	
 	public bool snapping;
 	public Vector3 startRotation;
@@ -43,39 +39,12 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		targetAngles = Vector3.zero;
 		followAngles = Vector3.zero;
 		originalRotation = transform.rotation;
-
 	}
 	
-	void LateUpdate () {		
-		
-		headingChange = Vector3.Angle (transform.forward, lastHeading);
-		fromNeutral = Quaternion.Angle (transform.rotation, Quaternion.Euler (new Vector3 (0f, 0f, transform.rotation.eulerAngles.z)));
-		
-		lastHeading = transform.forward;
-		
-		if (headingChange <= 0.0f) {
-			timeSinceInput += Time.deltaTime;
-		} else {
-			timeSinceInput = 0.0f;
-		}
-		
-		if (timeSinceInput >= levelingTimer) {
-			LevelingOn();
-		}
-		
-		if (leveling) {
-			if (fromNeutral <= 0f) {
-				LevelingOff();
-			}
-		}
-		
-		if (!leveling) {
-			transform.rotation = originalRotation;	
-		}
-		
+	void FixedUpdate () {		
 		float inputH = 0;
-		float inputV = 0;
-		
+		float inputV = 0;      
+
 		inputH = CrossPlatformInput.GetAxis("Mouse X");
 		inputV = CrossPlatformInput.GetAxis("Mouse Y");
 		
@@ -88,12 +57,37 @@ public class ModifiedSimpleMouseRotator : MonoBehaviour {
 		targetAngles.x += inputV * (rotationSpeed - xAdjustment);								
 		
 		targetAngles.y = Mathf.Clamp ( targetAngles.y, -rotationRange.y * 0.5f, rotationRange.y * 0.5f );
-		targetAngles.x = Mathf.Clamp ( targetAngles.x, -rotationRange.x * 0.5f, rotationRange.x * 0.5f );			
+		targetAngles.x = Mathf.Clamp ( targetAngles.x, -rotationRange.x * 0.5f, rotationRange.x * 0.5f );
+
+        if (Mathf.Abs (inputH) <= 0.0f || Mathf.Abs(inputV) <= 0.0f)
+        {
+            timeSinceInput += Time.deltaTime;
+        }
+        else
+        {
+            timeSinceInput = 0.0f;
+        }
+
+        if (timeSinceInput >= levelingTimer)
+        {
+            LevelingOn();
+        }
+
+        if (leveling)
+        {            
+            if (Mathf.Abs(inputH) > 0f || Mathf.Abs(inputH) > 0f)
+            {
+                iTween.StopByName("RotateTo");
+                LevelingOff();
+            }	
+        }
+
+        if (!leveling)
+        {
+            transform.rotation = originalRotation;
+        }
+
 		
-		if (Mathf.Abs (inputH) > 0f || Mathf.Abs (inputH) > 0f) {
-			iTween.StopByName("RotateTo");
-			LevelingOff();			
-		}	
 		
 		if (leveling) {
 			zeroX = transform.rotation;
